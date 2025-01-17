@@ -1,0 +1,60 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { render } from "astro:content";
+
+import { computeTitle } from "@/lib/data";
+import { mapImportsToBasenames } from "@/lib/glob";
+
+interface Props {
+  entry: CollectionEntry<"guidelines"> | CollectionEntry<"requirements">;
+}
+
+const { entry } = Astro.props;
+const entryType = entry.collection.slice(0, -1);
+const howtoSlug = entry.data.howto === true ? entry.id : entry.data.howto;
+const baseUrl = "https://w3c.github.io/wcag3/how-to/";
+const { Content } = await render(entry);
+// TODO: need to add class to first p in Content
+
+const components = mapImportsToBasenames(
+  import.meta.glob("@/components/guidelines/mdx/*.astro", {
+    eager: true,
+    import: "default",
+  })
+);
+---
+
+{
+  howtoSlug ? (
+    <div class="body-wrapper">
+      {entry.collection === "guidelines" ? (
+        <p class={`${entryType}-text`} set:html={entry.data.description} />
+      ) : (
+        <Content components={components} />
+      )}
+      <aside class="doclinks">
+        <p>
+          <a href={`${baseUrl}${howtoSlug}/`}>
+            <svg aria-hidden="true" class="i-info">
+              <use xlink:href="img/icons.svg#i-info" />
+            </svg>{" "}
+            {entry.collection === "guidelines" ? "How to meet " : ""}
+            {computeTitle(entry)}
+          </a>
+        </p>
+      </aside>
+    </div>
+  ) : entry.collection === "guidelines" ? (
+    <p class={`${entryType}-text`} set:html={entry.data.description} />
+  ) : (
+    <>
+      <Content components={components} />
+      {entry.data.needsAdditionalResearch && (
+        <p class="ednote">
+          Needs <a href="#additional_research">additional research</a>
+        </p>
+      )}
+    </>
+  )
+}
+{entry.collection === "guidelines" && <Content components={components} />}

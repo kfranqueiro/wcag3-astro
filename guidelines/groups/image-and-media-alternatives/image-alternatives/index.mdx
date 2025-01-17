@@ -1,0 +1,28 @@
+---
+children:
+  - decorative-image
+  - equivalent-text-alternative
+  - detectable-image
+  - image-role
+  - image-type
+  - editable-alternatives
+  - style-guide
+description: Users have equivalent alternatives for images.
+howto: true
+---
+
+<DecisionTree>
+  For each <a>image</a>:
+
+  1. Would removing the <a>image</a> impact how people understand the page?
+     - No, <a href="#decorative-image">Decorative image is programmatically hidden.</a> Stop.
+     - Yes, continue.
+
+  2. Is the <a>image</a> presented in a way that is available to user agents and assistive technology?
+     - Yes, <a>image</a> must meet <a href="#detectable-image">Image is programmatically determinable</a> AND the <a>accessibility support set</a> meets <a href="#equivalent-text-alternative">Equivalent text alternative is available for image that conveys content</a>. Stop.
+     - No, continue.
+
+  3. Is an equivalent text alternative available for the <a>image</a>?
+     - Yes, <a>image</a> must meet <a href="#equivalent-text-alternative">Equivalent text alternative is available for image that conveys content</a>. Stop.
+     - No, fail.
+</DecisionTree>

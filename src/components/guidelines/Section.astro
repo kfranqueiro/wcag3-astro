@@ -1,0 +1,25 @@
+---
+// TODO: delete this component if it ends up unused
+import type { DataCollectionKey } from 'astro:content';
+import { getEntry, render } from 'astro:content';
+import { mapImportsToBasenames } from '../../lib/glob';
+import type { HTMLAttributes } from 'astro/types';
+
+interface Props extends HTMLAttributes<"section"> {
+  collection: DataCollectionKey;
+  id: string;
+}
+const { collection, id, ...sectionProps } = Astro.props;
+const entry = await getEntry(collection, id);
+if (!entry) throw new Error(`Entry ${id} not found in collection ${collection}`);
+const { Content } = await render(entry);
+
+const components = mapImportsToBasenames(import.meta.glob("@/components/guidelines/mdx/*.astro", {
+  eager: true,
+  import: "default",
+}));
+---
+
+<section {...sectionProps}>
+  <Content components={components} />
+</section>

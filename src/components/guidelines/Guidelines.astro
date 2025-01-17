@@ -1,0 +1,28 @@
+---
+import { buildGuidelinesHierarchy, computeTitle } from "@/lib/data";
+
+import EntryText from "./EntryText.astro";
+
+const guidelines = await buildGuidelinesHierarchy();
+---
+
+{
+  guidelines.map((group) => (
+    <section data-status={group.data.status || undefined}>
+      <h3>{computeTitle(group)}</h3>
+      {group.data.guidelines.map((guideline) => (
+        <section class="guideline">
+          <h4>{computeTitle(guideline)}</h4>
+          <EntryText entry={guideline} />
+          {/* TODO: decision tree */}
+          {guideline.data.requirements.map((requirement) => (
+            <section class="requirement" data-status={requirement.data.status || undefined}>
+              <h5>{computeTitle(requirement)}</h5>
+              <EntryText entry={requirement} />
+            </section>
+          ))}
+        </section>
+      ))}
+    </section>
+  ))
+}
