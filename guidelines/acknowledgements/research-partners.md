@@ -1,4 +1,4 @@
-# Research Partners
+### Research Partners
 
 These researchers selected a Silver research question, did the research, and graciously allowed us to use the results.
 

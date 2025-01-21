@@ -1,4 +1,4 @@
-# Contributors to the development of this document
+### Contributors to the development of this document
 
 - Alastair Campbell (Nomensa)
 - Alina Vayntrub (Understood)

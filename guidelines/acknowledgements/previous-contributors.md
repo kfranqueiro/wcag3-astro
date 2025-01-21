@@ -1,4 +1,4 @@
-# Previous contributors to the development of this document
+### Previous contributors to the development of this document
 
 Abi James,
 Abi Roper, 

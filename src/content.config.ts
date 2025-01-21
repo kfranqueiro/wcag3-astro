@@ -2,11 +2,8 @@ import { defineCollection, reference, z } from "astro:content";
 import { file, glob } from "astro/loaders";
 
 /** howto can be set to true to indicate the informative and normative slugs are identical */
-const howtoSchema = z
-  .string()
-  .regex(/^[\w-]+$/)
-  .or(z.boolean());
-const statusSchema = z.enum(["developing", "exploratory", "placeholder"]);
+const howtoSchema = z.boolean().or(z.string().regex(/^[\w-]+$/));
+const statusSchema = z.enum(["placeholder", "exploratory", "developing", "refining", "mature"]);
 
 /** Contains fields common between guidelines and requirements */
 const commonChildSchema = z.object({
@@ -15,13 +12,21 @@ const commonChildSchema = z.object({
   title: z.string().optional(),
 });
 
+const stringArrayParser = (fileContent: string) =>
+  JSON.parse(fileContent).map((id: string) => ({ id }));
+
 export const collections = {
+  acknowledgementsOrder: defineCollection({
+    loader: file("./guidelines/acknowledgements/index.json", {
+      parser: stringArrayParser,
+    }),
+  }),
   acknowledgements: defineCollection({
-    loader: glob({ pattern: "*.md*", base: "./guidelines/acknowledgements" }),
+    loader: glob({ pattern: ["*.md*"], base: "./guidelines/acknowledgements" }),
   }),
   groupOrder: defineCollection({
     loader: file("./guidelines/groups/index.json", {
-      parser: (fileContent) => JSON.parse(fileContent).map((id: string) => ({ id })),
+      parser: stringArrayParser,
     }),
     schema: z.object({
       // This _should_ be able to use reference("groups"),
