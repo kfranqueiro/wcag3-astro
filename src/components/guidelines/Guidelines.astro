@@ -14,9 +14,8 @@ const guidelines = await buildGuidelinesHierarchy();
         <section class="guideline">
           <h4>{computeTitle(guideline)}</h4>
           <EntryText entry={guideline} />
-          {/* TODO: decision tree */}
           {guideline.data.requirements.map((requirement) => (
-            <section class="requirement" data-status={requirement.data.status || undefined}>
+            <section class="requirement" data-status={requirement.data.status} data-requirement-type={requirement.data.type}>
               <h5>{computeTitle(requirement)}</h5>
               <EntryText entry={requirement} />
             </section>

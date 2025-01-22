@@ -60,9 +60,8 @@ export const collections = {
       type: z.enum([
         "foundational",
         "supplemental",
-        "requirement", // TODO: should this eventually cease to exist?
         "assertion", // TODO: do assertions warrant distinct (or fewer) fields?
-      ]),
+      ]).optional(),
     }),
   }),
 };
