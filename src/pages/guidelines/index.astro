@@ -11,7 +11,9 @@ import Guidelines from "@/components/guidelines/Guidelines.astro";
 		<script is:inline src="guidelines.js" class="remove"></script>
 		<script is:inline src="respec-config.js" class="remove"></script>
 		<script is:inline src="https://www.w3.org/Tools/respec/respec-w3c" class="remove"></script>
-		<link rel="stylesheet" type="text/css" href="guidelines.css" />
+		<style is:global>
+			@import "@/styles/guidelines.css";
+		</style>
 	</head>
 	<body>
 		<section id="abstract">
