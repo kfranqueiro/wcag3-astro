@@ -2,4 +2,4 @@
 status: exploratory
 ---
 
-Where there is audio <a>content</a> in media, there are equivalent synchronized captions.
+Where there is audio :term[content] in media, there are equivalent synchronized captions.

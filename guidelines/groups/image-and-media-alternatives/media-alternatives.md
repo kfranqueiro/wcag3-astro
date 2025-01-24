@@ -8,4 +8,4 @@ children:
   - non-verbal-cues
 ---
 
-Users have equivalent alternatives for media <a>content</a>.
+Users have equivalent alternatives for media :term[content].

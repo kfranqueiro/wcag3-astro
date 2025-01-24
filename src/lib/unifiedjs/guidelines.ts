@@ -12,12 +12,20 @@ const getFrontmatter = (file: VFile) => file.data.astro!.frontmatter!;
 const customDirectives: RemarkPlugin = () => (tree, file) => {
   if (!isGuidelineFile(file)) return;
   visit(tree, (node) => {
-    if (node.type === "containerDirective")
+    if (node.type === "containerDirective") {
       if (node.name === "decision-tree") {
         const data = node.data || (node.data = {});
         data.hName = "details";
         data.hProperties = { class: "decision-tree" };
+        // summary is added separately in rehype pass, to keep existing children intact
       }
+    } else if (node.type === "textDirective") {
+      if (node.name === "term") {
+        // TODO: validate that term exists, after they're distilled into a collection
+        const data = node.data || (node.data = {});
+        data.hName = "a";
+      }
+    }
   });
 };
 
@@ -51,19 +59,5 @@ const addDecisionTreeSummary: RehypePlugin = () => (tree, file) => {
   });
 };
 
-/**
- * Removes `href=""` when found,
- * allowing `[markdown links]()` to produce `<a>` for definitions.
- */
-const removeEmptyHrefs: RehypePlugin = () => (tree, file) => {
-  if (!isGuidelineFile(file)) return;
-  visit(tree, "element", (node) => {
-    if (node.tagName === "a" && node.properties.href === "") {
-      console.log(`${file.stem} - found <a>`);
-      delete node.properties.href;
-    }
-  });
-};
-
 export const guidelinesRemarkPlugins = [customDirectives];
-export const guidelinesRehypePlugins = [extractFirstParagraph, addDecisionTreeSummary, removeEmptyHrefs];
+export const guidelinesRehypePlugins = [extractFirstParagraph, addDecisionTreeSummary];

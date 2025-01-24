@@ -3,4 +3,4 @@ needsAdditionalResearch: true
 status: exploratory
 ---
 
-Equivalent text alternatives are available for non-text, non-image <a>content</a> that conveys context or meaning.
+Equivalent text alternatives are available for non-text, non-image :term[content] that conveys context or meaning.

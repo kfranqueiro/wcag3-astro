@@ -4,4 +4,4 @@ status: developing
 type: foundational
 ---
 
-<a>Decorative image</a> is <a>programmatically</a> hidden.
+:term[Decorative image] is :term[programmatically] hidden.

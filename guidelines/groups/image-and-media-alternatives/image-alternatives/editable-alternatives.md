@@ -4,4 +4,4 @@ status: exploratory
 type: supplemental
 ---
 
-Auto generated text descriptions are editable by <a>content</a> creator.
+Auto generated text descriptions are editable by :term[content] creator.

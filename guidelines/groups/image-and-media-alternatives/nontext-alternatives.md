@@ -3,4 +3,4 @@ children:
   - nontext-content
 ---
 
-Users have alternatives available for non-text, non-image <a>content</a> that conveys context or meaning.
+Users have alternatives available for non-text, non-image :term[content] that conveys context or meaning.
