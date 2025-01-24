@@ -12,12 +12,12 @@ export async function buildGuidelinesHierarchy() {
     for (const groupId of groupIds) {
       const group = await getEntry("groups", groupId);
       if (!group) throw new Error(`Unresolvable group ID: ${groupId}`);
-      groups[groupId] = group;
+      groups[group.id] = group;
 
       for (const guidelineSlug of group.data.children) {
         const guideline = await getEntry("guidelines", `${groupId}/${guidelineSlug}`);
         if (!guideline) throw new Error(`Unresolvable guideline ID: ${guidelineSlug}`);
-        guidelines[guidelineSlug] = guideline;
+        guidelines[guideline.id] = guideline;
 
         for (const requirementSlug of guideline.data.children) {
           const requirement = await getEntry(
@@ -25,7 +25,7 @@ export async function buildGuidelinesHierarchy() {
             `${groupId}/${guidelineSlug}/${requirementSlug}`
           );
           if (!requirement) throw new Error(`Unresolvable requirement ID: ${requirementSlug}`);
-          requirements[requirementSlug] = requirement;
+          requirements[requirement.id] = requirement;
         }
       }
     }
@@ -35,15 +35,18 @@ export async function buildGuidelinesHierarchy() {
     ...groups[groupId],
     data: {
       ...groups[groupId].data,
-      guidelines: groups[groupId].data.children.map((guidelineId) => ({
-        ...guidelines[guidelineId],
-        data: {
-          ...guidelines[guidelineId].data,
-          requirements: guidelines[guidelineId].data.children.map(
-            (requirementId) => requirements[requirementId]
-          ),
-        },
-      })),
+      guidelines: groups[groupId].data.children.map((guidelineSlug) => {
+        const guideline = guidelines[`${groupId}/${guidelineSlug}`];
+        return {
+          ...guideline,
+          data: {
+            ...guideline.data,
+            requirements: guideline.data.children.map(
+              (requirementSlug) => requirements[`${groupId}/${guidelineSlug}/${requirementSlug}`]
+            ),
+          },
+        };
+      }),
     },
   }));
 }

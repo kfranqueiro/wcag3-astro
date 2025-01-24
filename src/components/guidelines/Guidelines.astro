@@ -11,7 +11,7 @@ const guidelines = await buildGuidelinesHierarchy();
     <section data-status={group.data.status || undefined}>
       <h3>{computeTitle(group)}</h3>
       {group.data.guidelines.map((guideline) => (
-        <section class="guideline">
+        <section class="guideline" data-status={guideline.data.status || undefined}>
           <h4>{computeTitle(guideline)}</h4>
           <EntryText entry={guideline} />
           {guideline.data.requirements.map((requirement) => (
