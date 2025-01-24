@@ -17,7 +17,11 @@ const customDirectives: RemarkPlugin = () => (tree, file) => {
         const data = node.data || (node.data = {});
         data.hName = "details";
         data.hProperties = { class: "decision-tree" };
-        // summary is added separately in rehype pass, to keep existing children intact
+        // Prepend summary to existing children (setting hChildren would clear them)
+        node.children.unshift({
+          type: "html",
+          value: "<summary>Which foundational requirements apply?</summary>",
+        });
       }
     } else if (node.type === "textDirective") {
       if (node.name === "term") {
@@ -46,18 +50,5 @@ const extractFirstParagraph: RehypePlugin = () => (tree, file) => {
   }
 };
 
-/**
- * Adds summary to decision-tree details elements,
- * since this can't be done non-destructively during the remark pass.
- */
-const addDecisionTreeSummary: RehypePlugin = () => (tree, file) => {
-  if (!isGuidelineFile(file)) return;
-  visit(tree, "element", (node) => {
-    if (node.tagName === "details" && node.properties.class === "decision-tree") {
-      node.children.unshift(h("summary", ["Which foundational requirements apply?"]));
-    }
-  });
-};
-
 export const guidelinesRemarkPlugins = [customDirectives];
-export const guidelinesRehypePlugins = [extractFirstParagraph, addDecisionTreeSummary];
+export const guidelinesRehypePlugins = [extractFirstParagraph];
