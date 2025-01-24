@@ -55,7 +55,7 @@ export interface EntryWithTitle {
 }
 
 /** Returns entry title if specified, or falls back to converting from its slug. */
-export async function computeTitle(entry: EntryWithTitle) {
+export function computeTitle(entry: EntryWithTitle) {
   if (entry.data.title) return entry.data.title;
   const slug = entry.id.replace(/^.*\//, "");
   return capitalize(slug.replace(/-/g, " "));

@@ -1,0 +1,6 @@
+---
+children:
+  - nontext-content
+---
+
+Users have alternatives available for non-text, non-image <a>content</a> that conveys context or meaning.

@@ -4,5 +4,6 @@ children:
   - minimum-text-contrast
   - text-size
   - text-style
-description: Users can read visually rendered text.
 ---
+
+Users can read visually rendered text.

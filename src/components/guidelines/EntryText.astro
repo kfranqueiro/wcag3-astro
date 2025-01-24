@@ -1,9 +1,9 @@
 ---
-import type { CollectionEntry } from "astro:content";
-import { render } from "astro:content";
+import { z, type CollectionEntry } from "astro:content";
 
-import { computeTitle } from "@/lib/data";
 import { mapImportsToBasenames } from "@/lib/glob";
+import { computeTitle } from "@/lib/guidelines";
+import { renderAndValidate } from "@/lib/zod";
 
 interface Props {
   entry: CollectionEntry<"guidelines"> | CollectionEntry<"requirements">;
@@ -13,8 +13,12 @@ const { entry } = Astro.props;
 const entryType = entry.collection.slice(0, -1);
 const howtoSlug = entry.data.howto === true ? entry.id : entry.data.howto;
 const baseUrl = "https://w3c.github.io/wcag3/how-to/";
-const { Content } = await render(entry);
-// TODO: need to add class to first p in Content
+const { Content, remarkPluginFrontmatter } = await renderAndValidate(
+  entry,
+  z.object({
+    description: z.string(),
+  })
+);
 
 const components = mapImportsToBasenames(
   import.meta.glob("@/components/guidelines/mdx/*.astro", {
@@ -27,11 +31,7 @@ const components = mapImportsToBasenames(
 {
   howtoSlug ? (
     <div class="body-wrapper">
-      {entry.collection === "guidelines" ? (
-        <p class={`${entryType}-text`} set:html={entry.data.description} />
-      ) : (
-        <Content components={components} />
-      )}
+      <p class={`${entryType}-text`} set:html={remarkPluginFrontmatter.description} />
       <aside class="doclinks">
         <p>
           <a href={`${baseUrl}${howtoSlug}/`}>
@@ -44,12 +44,10 @@ const components = mapImportsToBasenames(
         </p>
       </aside>
     </div>
-  ) : entry.collection === "guidelines" ? (
-    <p class={`${entryType}-text`} set:html={entry.data.description} />
   ) : (
     <>
-      <Content components={components} />
-      {entry.data.needsAdditionalResearch && (
+      <p class={`${entryType}-text`} set:html={remarkPluginFrontmatter.description} />
+      {entry.collection === "requirements" && entry.data.needsAdditionalResearch && (
         <p class="ednote">
           Needs <a href="#additional_research">additional research</a>
         </p>

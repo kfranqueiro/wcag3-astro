@@ -50,18 +50,19 @@ export const collections = {
       // Moreover, we can't override generateId for requirements to only use slug,
       // due to duplicates across separate guidelines, e.g. "style-guide"
       children: z.array(z.string()),
-      description: z.string(),
     }),
   }),
   requirements: defineCollection({
     loader: glob({ pattern: "*/*/*.md*", base: "./guidelines/groups" }),
     schema: commonChildSchema.extend({
       needsAdditionalResearch: z.boolean().optional(),
-      type: z.enum([
-        "foundational",
-        "supplemental",
-        "assertion", // TODO: do assertions warrant distinct (or fewer) fields?
-      ]).optional(),
+      type: z
+        .enum([
+          "foundational",
+          "supplemental",
+          "assertion", // TODO: do assertions warrant distinct (or fewer) fields?
+        ])
+        .optional(),
     }),
   }),
 };

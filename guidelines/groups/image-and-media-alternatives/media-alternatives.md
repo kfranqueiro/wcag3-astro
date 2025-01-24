@@ -6,5 +6,6 @@ children:
   - findable-media-alternatives
   - preferred-language
   - non-verbal-cues
-description: Users have equivalent alternatives for media <a>content</a>.
 ---
+
+Users have equivalent alternatives for media <a>content</a>.

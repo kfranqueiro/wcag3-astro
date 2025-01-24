@@ -4,5 +4,6 @@ children:
   - use-of-visual-depth
   - use-of-sound
   - use-of-spatial-audio
-description: Users have <a>content</a> that does not rely on a single sense or perception.
 ---
+
+Users have <a>content</a> that does not rely on a single sense or perception.

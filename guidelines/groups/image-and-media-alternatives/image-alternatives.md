@@ -7,11 +7,12 @@ children:
   - image-type
   - editable-alternatives
   - style-guide
-description: Users have equivalent alternatives for images.
 howto: true
 ---
 
-<DecisionTree>
+Users have equivalent alternatives for images.
+
+:::decision-tree
   For each <a>image</a>:
   1. Would removing the <a>image</a> impact how people understand the page?
      - No, <a href="#decorative-image">Decorative image is programmatically hidden.</a> Stop.
@@ -22,4 +23,4 @@ howto: true
   3. Is an equivalent text alternative available for the <a>image</a>?
      - Yes, <a>image</a> must meet <a href="#equivalent-text-alternative">Equivalent text alternative is available for image that conveys content</a>. Stop.
      - No, fail.
-</DecisionTree>
+:::
