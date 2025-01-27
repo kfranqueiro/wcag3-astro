@@ -1,6 +1,5 @@
 import type { RehypePlugin, RemarkPlugin } from "@astrojs/markdown-remark";
 
-import { h } from "hastscript";
 import { toHtml } from "hast-util-to-html";
 import { visit } from "unist-util-visit";
 import type { VFile } from "vfile";

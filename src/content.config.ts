@@ -1,4 +1,4 @@
-import { defineCollection, reference, z } from "astro:content";
+import { defineCollection, z } from "astro:content";
 import { file, glob } from "astro/loaders";
 
 /** howto can be set to true to indicate the informative and normative slugs are identical */

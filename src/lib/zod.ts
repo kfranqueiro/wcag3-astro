@@ -1,5 +1,5 @@
 import type { ZodObject, ZodRawShape } from "astro/zod";
-import { render, type AnyEntryMap, type RenderResult } from "astro:content";
+import { render, type AnyEntryMap } from "astro:content";
 
 /**
  * Renders a collection entry, with remarkPluginFrontmatter
