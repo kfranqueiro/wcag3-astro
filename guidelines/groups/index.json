@@ -1,5 +1,11 @@
 [
   "image-and-media-alternatives",
   "text-and-wording",
-  "interactive-components"
+  "interactive-components",
+  "input-operation",
+  "error-handling",
+  "animation-and-movement",
+  "layout",
+  "consistency-across-views",
+  "process-and-task-completion"
 ]
