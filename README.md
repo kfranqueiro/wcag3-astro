@@ -1,48 +1,64 @@
-# Astro Starter Kit: Basics
+**Note:** This repository is a work-in-progress to provide architecture for future WCAG 3 work.
 
-```sh
-npm create astro@latest -- --template basics
-```
+See https://github.com/w3c/wcag3 for the canonical WCAG 3 repository.
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/basics)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/basics)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/basics/devcontainer.json)
+## Architecture Status
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+- Normative document infrastructure:
+  - [x] Groups, Guidelines, Requirements
+  - [x] Acknowledgements
+  - [ ] Key Terms
+- [ ] Porting existing data from current Editor's Draft
+- [ ] Informative docs infrastructure (methods, etc.) - pending design
+- Feature parity with `w3c/wcag` build system:
+  - [ ] `WCAG_MODE` (and related variables)
+  - [ ] `WCAG_VERSION` (and version metadata in general)
 
-![just-the-basics](https://github.com/withastro/astro/assets/2244813/a0a5533c-a856-4198-8470-2d67b1d7c554)
+## Setup
 
-## 🚀 Project Structure
+Make sure you have Node.js installed. This has primarily been tested with v20,
+the current LTS at time of writing.
 
-Inside of your Astro project, you'll see the following folders and files:
+If you use [fnm](https://github.com/Schniz/fnm) or [nvm](https://github.com/nvm-sh/nvm) to manage multiple Node.js versions,
+you can switch to the recommended version by typing `fnm use` or `nvm use`
+(with no additional arguments) while in the repository directory.
 
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src/
-│   ├── layouts/
-│   │   └── Layout.astro
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
+Otherwise, you can download an installer from [nodejs.org](https://nodejs.org/).
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+First, run `npm i` in the root directory of the repository to install dependencies.
 
-## 🧞 Commands
+## Project Structure
+
+This repository uses Astro;
+see [Astro's guide on project structure](https://docs.astro.build/en/basics/project-structure/)
+for standard directories.
+
+Additional directories with special meaning in this repository:
+
+- `guidelines/` - contains content files which compose the normative and informative documents
+  - `acknowledgements/` - Contents of Acknowledgement sections, one section per file
+    - `index.json` - Defines order of Acknowledgements sections
+  - `groups/` - Contents of grouping sections
+    - `index.json` - Defines order of grouping sections
+    - `{group-name}/` - Contents of Guideline sections
+      - `index.json` - Defines order of guideline sections
+      - `{guideline-name}.md` - Defines content of guideline and order of its requirements/assertions
+      - `{guideline-name}/` - Subdirectory containing requirements/assertions under each guideline
+        - `{requirement-or-assertion-name}.md` - Defines content of an individual requirement or assertion
+
+In the case of files or directories representing groups, guidelines, or requirements/assertions,
+each entity's title is based on its slug by default, i.e. hyphens are replaced by spaces, and
+the first letter of the first word is capitalized. This can be customized by overriding the
+`title` field, which exists in `index.json` for groups, or in Markdown frontmatter for
+guidelines, requirements, or assertions.
+
+## Common Commands
 
 All commands are run from the root of the project, from a terminal:
 
 | Command                   | Action                                           |
 | :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+| `npm start`               | Start local dev server at `localhost:4321`       |
+| `npm run build`           | Build to `./dist/`                               |
+| `npm run check`           | Check for TypeScript errors                      |
+| `npm run preview`         | Preview build locally at `localhost:4321`        |
