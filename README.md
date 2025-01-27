@@ -62,3 +62,13 @@ All commands are run from the root of the project, from a terminal:
 | `npm run build`           | Build to `./dist/`                               |
 | `npm run check`           | Check for TypeScript errors                      |
 | `npm run preview`         | Preview build locally at `localhost:4321`        |
+
+## Environment Variables
+
+### `WCAG_DIFFABLE`
+
+Filters build output to reduce noise when diffing output between changes.
+This is for maintenance purposes only, to catch regressions;
+built code is not expected to run properly when this is active!
+
+**Default:** Unset (set to any non-empty value to enable)

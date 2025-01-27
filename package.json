@@ -13,6 +13,8 @@
   "dependencies": {
     "@astrojs/markdown-remark": "^6.0.2",
     "astro": "^5.1.7",
+    "cheerio": "^1.0.0",
+    "fast-glob": "^3.3.3",
     "hast-util-to-html": "^9.0.4",
     "lodash-es": "^4.17.21",
     "remark-definition-list": "^2.0.0",
