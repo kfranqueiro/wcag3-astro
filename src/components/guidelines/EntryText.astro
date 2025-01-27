@@ -11,7 +11,6 @@ interface Props {
 }
 
 const { entry } = Astro.props;
-const entryType = entry.collection.slice(0, -1);
 const idParts = entry.id.split("/");
 const parentHowto =
   entry.collection === "requirements"
@@ -40,7 +39,7 @@ const components = mapImportsToBasenames(
 {
   howtoSlug ? (
     <div class="body-wrapper">
-      <p class={`${entryType}-text`} set:html={remarkPluginFrontmatter.description} />
+      <Fragment set:html={remarkPluginFrontmatter.description} />
       <aside class="doclinks">
         <p>
           <a href={`${baseUrl}${howtoPath}`}>
@@ -55,14 +54,14 @@ const components = mapImportsToBasenames(
       </aside>
     </div>
   ) : (
-    <>
-      <p class={`${entryType}-text`} set:html={remarkPluginFrontmatter.description} />
-      {entry.collection === "requirements" && entry.data.needsAdditionalResearch && (
-        <p class="ednote">
-          Needs <a href="#additional_research">additional research</a>
-        </p>
-      )}
-    </>
+    <Fragment set:html={remarkPluginFrontmatter.description} />
   )
 }
-{entry.collection === "guidelines" && <Content components={components} />}
+{
+  entry.collection === "requirements" && entry.data.needsAdditionalResearch && (
+    <p class="ednote">
+      Needs <a href="#additional_research">additional research</a>
+    </p>
+  )
+}
+<Content components={components} />
