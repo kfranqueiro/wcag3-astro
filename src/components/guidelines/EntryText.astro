@@ -1,7 +1,6 @@
 ---
 import { z, type CollectionEntry } from "astro:content";
 
-import { mapImportsToBasenames } from "@/lib/glob";
 import { computeTitle } from "@/lib/guidelines";
 import { renderAndValidate } from "@/lib/zod";
 import { getEntry } from "astro:content";
@@ -25,13 +24,6 @@ const { Content, remarkPluginFrontmatter } = await renderAndValidate(
   entry,
   z.object({
     description: z.string(),
-  })
-);
-
-const components = mapImportsToBasenames(
-  import.meta.glob("@/components/guidelines/mdx/*.astro", {
-    eager: true,
-    import: "default",
   })
 );
 ---
@@ -64,4 +56,4 @@ const components = mapImportsToBasenames(
     </p>
   )
 }
-<Content components={components} />
+<Content />
