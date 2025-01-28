@@ -14,6 +14,7 @@ import { guidelinesRehypePlugins, guidelinesRemarkPlugins } from "./src/lib/unif
 
 // https://astro.build/config
 export default defineConfig({
+  trailingSlash: "always",
   markdown: {
     remarkPlugins: [remarkDirective, remarkDefinitionList, ...guidelinesRemarkPlugins],
     rehypePlugins: [...guidelinesRehypePlugins],

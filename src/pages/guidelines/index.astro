@@ -3,10 +3,10 @@ import Acknowledgements from "@/components/guidelines/Acknowledgements.astro";
 import GlossaryDefinitionList from "@/components/guidelines/GlossaryDefinitionList.astro";
 import GroupsList from "@/components/guidelines/GroupsList.astro";
 import Guidelines from "@/components/guidelines/Guidelines.astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
 ---
 
-<!DOCTYPE html>
-<html lang="en-US">
+<BaseLayout>
 	<head>
 		<title>W3C Accessibility Guidelines (WCAG) 3.0</title>
 		<meta charset="UTF-8" />
@@ -236,4 +236,4 @@ import Guidelines from "@/components/guidelines/Guidelines.astro";
       <Acknowledgements />
 		</section>
 	</body>
-</html>
+</BaseLayout>
