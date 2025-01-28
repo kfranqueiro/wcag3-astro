@@ -18,13 +18,34 @@ function getGuidelineFileType(file: VFile) {
   return null;
 }
 
+const isTermFile = (file: VFile) => file.dirname?.startsWith(`${file.cwd}/guidelines/terms`);
+
 const getFrontmatter = (file: VFile) => file.data.astro!.frontmatter!;
 
+/** Adds standard editor's note to terms with empty content. */
+const addEmptyTermNote: RemarkPlugin = () => (tree, file) => {
+  if (isTermFile(file) && !tree.children.length) {
+    tree.children.push({
+      type: "containerDirective",
+      name: "ednote",
+      children: [
+        {
+          type: "paragraph",
+          children: [{ type: "text", value: "To be defined." }],
+        },
+      ],
+    });
+  }
+};
+
 const customDirectives: RemarkPlugin = () => (tree, file) => {
-  if (!isGuidelineFile(file)) return;
+  const isGuideline = isGuidelineFile(file);
+  const isTerm = isTermFile(file);
+  if (!isGuideline && !isTerm) return;
+
   visit(tree, (node) => {
     if (node.type === "containerDirective") {
-      if (node.name === "decision-tree") {
+      if (isGuideline && node.name === "decision-tree") {
         const data = node.data || (node.data = {});
         data.hName = "details";
         data.hProperties = { class: "decision-tree" };
@@ -33,10 +54,13 @@ const customDirectives: RemarkPlugin = () => (tree, file) => {
           type: "html",
           value: "<summary>Which foundational requirements apply?</summary>",
         });
+      } else if (isTerm && node.name === "ednote") {
+        const data = node.data || (node.data = {});
+        data.hName = "div";
+        data.hProperties = { class: "ednote" };
       }
     } else if (node.type === "textDirective") {
       if (node.name === "term") {
-        // TODO: validate that term exists, after they're distilled into a collection
         const data = node.data || (node.data = {});
         data.hName = "a";
       }
@@ -73,5 +97,5 @@ const extractLeadingContent: RehypePlugin = () => (tree, file) => {
   getFrontmatter(file).description = html;
 };
 
-export const guidelinesRemarkPlugins = [customDirectives];
+export const guidelinesRemarkPlugins = [addEmptyTermNote, customDirectives];
 export const guidelinesRehypePlugins = [extractLeadingContent];

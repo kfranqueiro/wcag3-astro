@@ -65,4 +65,10 @@ export const collections = {
         .optional(),
     }),
   }),
+  terms: defineCollection({
+    loader: glob({ pattern: "*.md", base: "./guidelines/terms" }),
+    schema: commonChildSchema.omit({ howto: true }).extend({
+      synonyms: z.array(z.string()).min(1).optional(),
+    }),
+  }),
 };
