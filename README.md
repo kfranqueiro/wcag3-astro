@@ -7,8 +7,8 @@ See https://github.com/w3c/wcag3 for the canonical WCAG 3 repository.
 - Normative document infrastructure:
   - [x] Groups, Guidelines, Requirements
   - [x] Acknowledgements
-  - [ ] Key Terms
-- [ ] Porting existing data from current Editor's Draft
+  - [x] Glossary
+- [x] Porting existing data from current Editor's Draft
 - [ ] Informative docs infrastructure (methods, etc.) - pending design
 - Feature parity with `w3c/wcag` build system:
   - [ ] `WCAG_MODE` (and related variables)
