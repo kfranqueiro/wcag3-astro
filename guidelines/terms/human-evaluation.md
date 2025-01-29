@@ -1,12 +1,12 @@
 ---
 synonyms:
-  - Human testing
-  - Human evaluated
-  - Human tested
-  - Manual
-  - Manual evaluation
-  - Manual testing
-  - Manually tested
+  - human testing
+  - human evaluated
+  - human tested
+  - manual
+  - manual evaluation
+  - manual testing
+  - manually tested
 ---
 
 Evaluation conducted by a human, typically to apply human judgement to tests that cannot be fully :term[automatically evaluated].

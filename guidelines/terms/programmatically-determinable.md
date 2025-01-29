@@ -1,7 +1,7 @@
 ---
 synonyms:
-  - Programmatically
-  - Programmatically indicated
-  - Programmatically detectable
-  - Programmatically associated
+  - programmatically
+  - programmatically indicated
+  - programmatically detectable
+  - programmatically associated
 ---

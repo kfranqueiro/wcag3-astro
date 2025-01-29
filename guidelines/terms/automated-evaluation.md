@@ -1,9 +1,9 @@
 ---
 synonyms:
-  - Automated
-  - Automatically evaluated
-  - Automated testing
-  - Automatically tested
+  - automated
+  - automatically evaluated
+  - automated testing
+  - automatically tested
 ---
 
 Evaluation conducted using software tools, typically evaluating code-level features and applying heuristics for other tests.

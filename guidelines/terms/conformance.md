@@ -1,7 +1,7 @@
 ---
 status: developing
 synonyms:
-  - Conform
+  - conform
 ---
 
 Satisfying all the requirements of the guidelines. Conformance is an important part of following
