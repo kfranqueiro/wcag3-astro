@@ -40,8 +40,8 @@ Additional directories with special meaning in this repository:
     - `index.json` - Defines order of Acknowledgements sections
   - `groups/` - Contents of grouping sections
     - `index.json` - Defines order of grouping sections
+    - `{group-name}.json` - Defines order of underlying guideline sections; can specify status or title
     - `{group-name}/` - Contents of Guideline sections
-      - `index.json` - Defines order of guideline sections
       - `{guideline-name}.md` - Defines content of guideline and order of its requirements/assertions
       - `{guideline-name}/` - Subdirectory containing requirements/assertions under each guideline
         - `{requirement-or-assertion-name}.md` - Defines content of an individual requirement or assertion
