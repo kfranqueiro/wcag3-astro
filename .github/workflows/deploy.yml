@@ -16,12 +16,27 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout your repository using git
+      - name: Checkout git repository
         uses: actions/checkout@v4
-      - name: Install, build, and upload your site output
-        uses: withastro/action@v2
+      - name: Install node
+        uses: actions/setup-node@v4
         with:
-          node-version: 20
+          cache: npm
+          node-version-file: .nvmrc
+      - name: Install and build
+        run: |
+          npm ci
+          npm run build
+      - name: spec-generator
+        run: |
+          cd dist/guidelines
+          tar cf ../../wcag3.tar *
+          cd -
+          curl https://labs.w3.org/spec-generator/?type=respec -F file=@wcag3.tar -o dist/guidelines/index.html -f --retry 3
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
 
   deploy:
     needs: build
