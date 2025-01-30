@@ -43,7 +43,7 @@ export const collections = {
     }),
   }),
   guidelines: defineCollection({
-    loader: glob({ pattern: "*/*.md*", base: "./guidelines/groups" }),
+    loader: glob({ pattern: "*/*.md", base: "./guidelines/groups" }),
     schema: commonChildSchema.extend({
       // Note: can't use references for children while relying on default ids,
       // since auto-generated ids include every * segment rather than only the last.
@@ -53,7 +53,7 @@ export const collections = {
     }),
   }),
   requirements: defineCollection({
-    loader: glob({ pattern: "*/*/*.md*", base: "./guidelines/groups" }),
+    loader: glob({ pattern: "*/*/*.md", base: "./guidelines/groups" }),
     schema: commonChildSchema.extend({
       needsAdditionalResearch: z.boolean().optional(),
       type: z
