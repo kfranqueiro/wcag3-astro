@@ -12,8 +12,16 @@ import { fileURLToPath } from "url";
 
 import { guidelinesRehypePlugins, guidelinesRemarkPlugins } from "./src/lib/unifiedjs/guidelines";
 
+import node from "@astrojs/node";
+
 // https://astro.build/config
 export default defineConfig({
+  adapter: node({
+    mode: "standalone",
+  }),
+  // astro dev ensures NODE_ENV is set to development;
+  // DEV/PROD env vars are not set yet when config is loaded
+  output: process.env.NODE_ENV === "development" ? "server" : "static",
   trailingSlash: "always",
   markdown: {
     remarkPlugins: [remarkDirective, remarkDefinitionList, ...guidelinesRemarkPlugins],

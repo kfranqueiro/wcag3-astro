@@ -1,10 +1,14 @@
 import { getCollection, getEntry, type CollectionEntry, type CollectionKey } from "astro:content";
+import { z } from "astro/zod";
 import capitalize from "lodash-es/capitalize";
 
 let groupIds = (await getCollection("groupOrder")).map(({ id }) => id);
 let groups: Record<string, CollectionEntry<"groups">> = {};
 let guidelines: Record<string, CollectionEntry<"guidelines">> = {};
 let requirements: Record<string, CollectionEntry<"requirements">> = {};
+
+/** Zod enum of guidelines-related collections that are editable in dev mode */
+export const editableTypesSchema = z.enum(["guidelines", "requirements", "terms"]);
 
 export async function buildGuidelinesHierarchy() {
   // Cache collated collection data for subsequent calls

@@ -1,0 +1,37 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { computeTitle } from "@/lib/guidelines";
+import { editableTypesSchema } from "@/lib/guidelines";
+import { actions } from "astro:actions";
+import { getEntry } from "astro:content";
+import { readFile } from "fs/promises";
+
+if (!import.meta.env.DEV) return new Response(null, { status: 404 });
+
+const result = Astro.getActionResult(actions.edit);
+if (result && !result.error) return Astro.redirect("/guidelines/");
+
+const params = Astro.url.searchParams;
+const id = params.get("id");
+const parsedType = editableTypesSchema.safeParse(params.get("type"));
+if (!id || !parsedType.success) return new Response(null, { status: 404 });
+
+const entry = await getEntry(parsedType.data, id);
+if (!entry?.filePath) return new Response(null, { status: 404 });
+const content = await readFile(entry.filePath, "utf8");
+---
+
+<BaseLayout>
+  <head>
+    <meta charset="utf-8" />
+    <title>Editing {computeTitle(entry)}</title>
+  </head>
+  <body>
+    <form method="POST" action={actions.edit}>
+      <input type="hidden" name="id" value={id} />
+      <input type="hidden" name="type" value={parsedType.data} />
+      <textarea name="content">{content}</textarea>
+      <button>Save</button>
+    </form>
+  </body>
+</BaseLayout>
