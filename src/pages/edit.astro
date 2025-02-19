@@ -6,36 +6,62 @@ import { actions } from "astro:actions";
 import { getEntry } from "astro:content";
 import { readFile } from "fs/promises";
 
-if (!import.meta.env.DEV) return new Response(null, { status: 404 });
-
 const result = Astro.getActionResult(actions.edit);
 if (result && !result.error) return Astro.redirect("/guidelines/");
 
-const params = Astro.url.searchParams;
-const id = params.get("id");
-const parsedType = editableTypesSchema.safeParse(params.get("type"));
-if (!id || !parsedType.success) return new Response(null, { status: 404 });
+async function getContent() {
+  if (!import.meta.env.DEV) return {};
+  const params = Astro.url.searchParams;
+  const id = params.get("id");
+  const parsedType = editableTypesSchema.safeParse(params.get("type"));
+  if (!id || !parsedType.success) return new Response(null, { status: 404 });
 
-const entry = await getEntry(parsedType.data, id);
-if (!entry?.filePath) return new Response(null, { status: 404 });
-const content = await readFile(entry.filePath, "utf8");
+  const entry = await getEntry(parsedType.data, id);
+  if (!entry?.filePath) return new Response(null, { status: 404 });
+  return {
+    content: await readFile(entry.filePath, "utf8"),
+    title: computeTitle(entry),
+    id,
+    type: parsedType.data
+  }
+}
+
+const contentResult = await getContent();
+if (contentResult instanceof Response) return contentResult;
+const {content, title, id, type} = contentResult;
 ---
 
 <BaseLayout>
   <head>
     <meta charset="utf-8" />
-    <title>Editing {computeTitle(entry)}</title>
+    <title>Editing {title}</title>
   </head>
   <body>
     <form method="POST" action={actions.edit}>
-      <h1>Editing {computeTitle(entry)}</h1>
-      <input type="hidden" name="id" value={id} />
-      <input type="hidden" name="type" value={parsedType.data} />
+      <h1>Editing {title}</h1>
+      {id && <input type="hidden" name="id" value={id} />}
+      {type && <input type="hidden" name="type" value={type} />}
       <textarea name="content">{content}</textarea>
-      <button>Save</button>
+      {
+        import.meta.env.DEV ? (
+          <button>Save</button>
+        ) : (
+          <p>Saving is only possible when running the dev server.</p>
+        )
+      }
     </form>
   </body>
 </BaseLayout>
+
+<script>
+  const params = new URLSearchParams(location.search);
+  const content = params.get("content");
+  if (content) {
+    document.querySelector("textarea")!.value = content;
+    document.querySelector("title")!.textContent = `Editing ${params.get("id")}`;
+    document.querySelector("h1")!.textContent = `Editing ${params.get("id")}`;
+  }
+</script>
 
 <style>
   * {
