@@ -29,14 +29,14 @@ jobs:
           npm run build
       - name: spec-generator
         run: |
-          cd dist/guidelines
-          tar cf ../../wcag3.tar *
+          cd dist/client/guidelines
+          tar cf ../../../wcag3.tar *
           cd -
-          curl https://labs.w3.org/spec-generator/?type=respec -F file=@wcag3.tar -o dist/guidelines/index.html -f --retry 3
+          curl https://labs.w3.org/spec-generator/?type=respec -F file=@wcag3.tar -o dist/client/guidelines/index.html -f --retry 3
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: dist
+          path: dist/client
 
   deploy:
     needs: build
