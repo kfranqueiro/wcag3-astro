@@ -14,11 +14,14 @@ import { guidelinesRehypePlugins, guidelinesRemarkPlugins } from "./src/lib/unif
 
 import node from "@astrojs/node";
 
+const GH_REPO = process.env.GITHUB_REPOSITORY; // Only set during GitHub action
+
 // https://astro.build/config
 export default defineConfig({
   adapter: node({
     mode: "standalone",
   }),
+  base: `${GH_REPO ? GH_REPO.slice(GH_REPO.indexOf("/")) : ""}/`,
   // astro dev ensures NODE_ENV is set to development;
   // DEV/PROD env vars are not set yet when config is loaded
   output: process.env.NODE_ENV === "development" ? "server" : "static",
