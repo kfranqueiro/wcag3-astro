@@ -11,8 +11,8 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/markdown-remark": "^6.1.0",
-    "astro": "^5.2.1",
+    "@astrojs/markdown-remark": "^6.2.0",
+    "astro": "^5.4.2",
     "cheerio": "^1.0.0",
     "fast-glob": "^3.3.3",
     "hast-util-to-html": "^9.0.4",
