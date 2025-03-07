@@ -55,6 +55,7 @@
 - Poornima Badhan Subramanian (Invited Expert)
 - Rachael Bradley Montgomery (Library of Congress)
 - Rain Breaw Michaels (Google LLC)
+- Rashmi Katakwar (Invited Expert)
 - Roberto Scano (Invited Expert)
 - Sarah Horton (Invited Expert)
 - Scott O'Hara (Microsoft Corporation)
