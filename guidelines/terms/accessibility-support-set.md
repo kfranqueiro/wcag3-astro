@@ -2,7 +2,7 @@
 status: developing
 ---
 
-The group of user-agents and assistive technologies you test with.
+The group of user agents and assistive technologies you test with.
 
 :::ednote
 The AG is considering defining a default set of user agents and assistive technologies that they use when validating guidelines.
